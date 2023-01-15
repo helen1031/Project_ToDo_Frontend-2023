@@ -2,26 +2,27 @@ import "./App.css";
 import Todo from "./Todo";
 import AddTodo from "./AddTodo";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, List, Paper } from "@mui/material";
+import { call } from "./service/ApiService";
 
 function App() {
-  const [items, setItems] = useState([{ id: 0, title: "1", done: "true" }]);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    call("/todo", "GET", null).then((response) => setItems(response.data));
+  }, []);
 
   const addItem = (item) => {
-    item.id = "ID-" + items.length;
-    item.done = false;
-    setItems([...items, item]);
-    console.log("items : ", items);
+    call("/todo", "POST", item).then((response) => setItems(response.data));
   };
 
   const deleteItem = (item) => {
-    const newItems = items.filter((e) => e.id !== item.id);
-    setItems([...newItems]);
+    call("/todo", "DELETE", item).then((response) => setItems(response.data));
   };
 
-  const editItem = () => {
-    setItems([...items]);
+  const editItem = (item) => {
+    call("/todo", "PUT", item).then((response) => setItems(response.data));
   };
 
   let todoItems = items.length > 0 && (

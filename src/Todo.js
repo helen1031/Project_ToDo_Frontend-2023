@@ -24,20 +24,20 @@ const Todo = (props) => {
     setReadOnly(false);
   };
 
-  const turnOnReadOnly = (e) => {
-    if (e.key === "Enter") {
-      setReadOnly(true);
-    }
+  const editEventHandler = (e) => {
+    setItem({ ...item, title: e.target.value });
   };
 
-  const editEventHandler = (e) => {
-    item.title = e.target.value;
-    editItem();
+  const turnOnReadOnly = (e) => {
+    if (e.key === "Enter" && readOnly === false) {
+      setReadOnly(true);
+      editItem(item);
+    }
   };
 
   const checkBoxEventHandler = (e) => {
     item.done = e.target.checked;
-    editItem();
+    editItem(item);
   };
 
   return (
