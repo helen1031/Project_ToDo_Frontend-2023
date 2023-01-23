@@ -2,7 +2,7 @@
 
 SWAPFILE=/var/swapfile
 
-if [ -f $SWAPFILE]; then
+if [ -f $SWAPFILE ]; then
   echo "$SWAPFILE found, skip"
   exit;
 
